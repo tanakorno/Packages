@@ -102,6 +102,7 @@ function [m,s] = stat(x)
 %         ^ variable.parameter.output.function.matlab
 %          ^ -variable.parameter.output.function.matlab
 %           ^ variable.parameter.output.function.matlab
+%              ^ keyword.operator.assignment.matlab
 %                ^^^^ entity.name.function.matlab
 %                     ^ variable.parameter.input.function.matlab
    n = length(x);
@@ -110,10 +111,34 @@ function [m,s] = stat(x)
 end
 
 function m = avg(x,n)
+%        ^ variable.parameter.output.function.matlab
 %            ^^^ entity.name.function.matlab
 %                ^ variable.parameter.input.function.matlab
 %                  ^ variable.parameter.input.function.matlab
    m = sum(x)/n;
+end
+
+function foo(bar)
+% <- keyword.other.matlab
+%        ^^^ entity.name.function.matlab
+%            ^^^ meta.function.parameters.matlab variable.parameter.input.function.matlab
+end
+
+function x = foo
+% <- keyword.other.matlab
+%        ^ variable.parameter.output.function.matlab
+%          ^ keyword.operator.assignment.matlab
+%            ^^^ entity.name.function.matlab
+end
+
+function foo
+% <- keyword.other.matlab
+%        ^^^ entity.name.function.matlab
+end
+
+function foo % with comment
+% <- keyword.other.matlab
+%        ^^^ entity.name.function.matlab
 end
 
 
@@ -132,8 +157,9 @@ end
 % <- constant.numeric.matlab
 1e1
 % <- constant.numeric.matlab
-1i
+1i - (4i)
 % <- constant.numeric.matlab
+%     ^^ constant.numeric.matlab
 1j
 % <- constant.numeric.matlab
 1e2j
@@ -148,10 +174,18 @@ a = a' % is the conjugate and transpose
 a = a.' % is the transpose
 %   ^ -keyword.operator.transpose.matlab
 %    ^^ keyword.operator.transpose.matlab
+c = a.b' % is the conjugate and transpose of the field b of structure a
+%    ^ punctuation.accessor.dot.matlab
+%      ^ keyword.operator.transpose.matlab
+c = a.b.' % is the transpose of the field b of structure a
+%    ^ punctuation.accessor.dot.matlab
+%      ^^ keyword.operator.transpose.matlab
 x = a[3]' + b(4)' % is the conjugate and transpose
 %       ^ keyword.operator.transpose.matlab
 %               ^ keyword.operator.transpose.matlab
 
+l = {l.n}';
+%        ^ keyword.operator.transpose.matlab
 
 %---------------------------------------------
 % String
@@ -176,3 +210,7 @@ s1="00:06:57";
 %   ^^^^^^^^ string.quoted.double.matlab
 %           ^ punctuation.definition.string.end.matlab
 
+%---------------------------------------------
+parfor x = 1:10
+%^ keyword.control.matlab
+end

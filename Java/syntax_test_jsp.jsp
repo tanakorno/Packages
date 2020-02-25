@@ -7,13 +7,21 @@
 //  ^^^^^^^^^^^^^^^ meta.tag
 </head>
 <body>
+    <%@ include file="foo.bar" %>
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.directive
+//  ^^^ punctuation.section.directive
+//                             ^^ punctuation.section.directive
+
+    Plain text
+//  ^^^^^^^^^^ text.html.jsp - meta
+
     <%-- This is a comment --%>
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block.jsp
     <%
 //  ^^ punctuation.section.embedded.begin.jsp - source.java.embedded.html
 //    ^ source.java.embedded.html
     if (!foo && !bar) {
-//  ^^ keyword.control.java
+//  ^^ keyword.control.conditional.if.java
 //      ^ keyword.operator.logical.java
 //           ^^ keyword.operator.logical.java
     %><div style="width: 90%"></div><%
@@ -21,7 +29,7 @@
 //    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.tag
 //                                  ^^ punctuation.section.embedded.begin.jsp - source.java.embedded.html
         if (foot.shouldBe()) {
-//      ^^ keyword.control.java
+//      ^^ keyword.control.conditional.if.java
             boolean test = false;
 //          ^^^^^^^ storage.type
 //                         ^^^^^ constant
